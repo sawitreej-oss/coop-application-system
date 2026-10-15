@@ -201,7 +201,32 @@ const server = http.createServer(async (req, res) => {
   }
 
   const parsedUrl = url.parse(req.url, true);
-  const pathname = parsedUrl.pathname;
+  const pathname = parsedUrl.pathname; // โค้ดสำหรับรับคำสั่งลบข้อมูล
+if (pathname.startsWith('/api/applications/') && req.method === 'DELETE') {
+    const id = pathname.split('/')[3];
+    const filePath = path.join(__dirname, 'data', 'applications.json');
+    
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ error: 'ไม่สามารถอ่านไฟล์ได้' }));
+            return;
+        }
+        let applications = JSON.parse(data || '[]');
+        const filtered = applications.filter(app => app.id != id);
+        
+        fs.writeFile(filePath, JSON.stringify(filtered, null, 2), (err) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ error: 'ไม่สามารถบันทึกข้อมูลได้' }));
+                return;
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ success: true, message: 'ลบข้อมูลสำเร็จ' }));
+        });
+    });
+    return;
+}
   const method = req.method;
 
   // JSON API Routes
