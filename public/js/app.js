@@ -1146,6 +1146,51 @@ window.fillSampleData = fillSampleData;
 window.clearForm = clearForm;
 window.editApp = editApp;
 window.viewAndPrintApp = viewAndPrintApp;
+let deleteTargetId = null;
+
+function confirmDeleteApp(id) {
+    deleteTargetId = id;
+    if (confirm('คุณต้องการลบข้อมูลรายการนี้ใช่หรือไม่?')) {
+        executeDeleteApp();
+    }
+}
+
+async function executeDeleteApp() {
+    if (!deleteTargetId) return;
+    try {
+        const response = await fetch(`/api/applications/${deleteTargetId}`, {
+            method: 'DELETE'
+        });
+        const result = await response.json();
+        if (response.ok) {
+            alert('ลบข้อมูลเรียบร้อยแล้ว');
+            location.reload();
+        } else {
+            alert('เกิดข้อผิดพลาด: ' + (result.error || 'ไม่สามารถลบข้อมูลได้'));
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้');
+    }
+}
+async function executeDeleteApp() {
+    if (!deleteTargetId) return;
+    try {
+        const response = await fetch(`/api/applications/${deleteTargetId}`, {
+            method: 'DELETE'
+        });
+        const result = await response.json();
+        if (response.ok) {
+            alert('ลบข้อมูลเรียบร้อยแล้ว');
+            location.reload();
+        } else {
+            alert('เกิดข้อผิดพลาด: ' + (result.error || 'ไม่สามารถลบข้อมูลได้'));
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้');
+    }
+}
 window.confirmDeleteApp = confirmDeleteApp;
 window.executeDeleteApp = executeDeleteApp;
 window.closeModal = closeModal;
