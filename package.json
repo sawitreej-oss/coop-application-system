@@ -1,0 +1,18 @@
+{
+  "name": "coop-application-system",
+  "version": "1.0.0",
+  "description": "ระบบบันทึกใบสมัครสหกิจศึกษา (Ms-Coop 01-01) คณะวิทยาการจัดการ มหาวิทยาลัยราชภัฏเทพสตรี",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "cooperative-education",
+    "thepsatri-rajabhat-university",
+    "ms-tru",
+    "application-form",
+    "ms-coop-01-01"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}
